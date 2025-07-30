@@ -102,7 +102,9 @@
         entered values. You will need to prompt the user to enter three different values, and print the mean of these 
         values to the console. This will involve type conversions, basic math, and user input handling.<br>
         <em>(Hint: Try and except blocks will be needed to make sure the values the user is entering is 
-            able to be casted to an integer. In other words, make sure they are ints or floats, not strings).
+            able to be casted to an integer. In other words, make sure they are ints or floats, not strings). -1
+            should be printed in the case that the user enters a value that can not be converted to an int
+            and divided with, like a character or word.
         </em>
     </p>
     <div style = "display: flex; background-color: rgb(0,0,0,.3)" class = "samps">
@@ -121,6 +123,10 @@
     </p>
     </div>
     </div>
+     <h2><em>Note: -1 should be returned if the user enters a non-number, like a string or int.
+        The test cases will test to see if a ValueError is caught.
+     </em>
+   </h2>
     <div class = "proj_space">
   
     <div style = "margin-right: auto; margin-left: 40px; width: 60%">
@@ -128,10 +134,28 @@
         <button>Fill Sample Solution</button>
         </div>
     <div id="editor">#Enter python code here</div>
-    <button id = "run">Run Code</button>
+    <button id = "run" onclick = "runPyo()">Run Code</button>
     </div>
-    <div class = "output">
+     <div class = "output1">
     <h1>Output Results</h1>
+    <div class = "test-cases">
+        <div class = "case">
+        <h3 id = "head1"></h3>
+        <p id = "1"></p>
+        <p id = "2"></p>
+        <p id = "3"></p>
+        <p id = "4"></p>
+        <p id = "5"></p>
+        </div>
+        <div class = "result">
+            <h3 id = "head2"></h3>
+            <p id = "res1"></p>
+            <p id = "res2"></p>
+            <p id = "res3"></p>
+            <p id = "res4"></p>
+            <p id = "res5"></p>
+        </div>
+    </div>
     </div>
 
   <!-- Load Ace Editor -->
@@ -144,15 +168,195 @@
       fontFamily: "monospace",
     });
   </script>
+  <script>
+    async function runPyo()
+    {
+        let pyodide = await loadPyodide();
+        let code = editor.getValue();
+        
+        cases = [[2, 6, 7], [1, -4, 10], [10, 7, 3], [15, 9, 5], ['a', 'b', '3', -1]]
+
+        for (let i = 0; i < 5; i++)
+        {
+            run = `
+test_case = ${pyodide.toPy(cases[i])}
+index = 0
+def input(prompt=""):
+    global index
+    to_return = str(test_case[index])
+    index+=1
+    if index == 3:
+        index = 0
+    return to_return
+
+import io
+import sys
+buffer1 = io.StringIO()
+sys.stdout = buffer1
+error=""
+exc=""
+output = ""
+val_err = ""
+user_code = """
+${code}
+"""
+
+try:
+    compiled = compile(user_code, "<user_code>", "exec")
+    exec(compiled)
+    if isinstance(test_case[0], int) and isinstance(test_case[1], int) and isinstance(test_case[2], int):
+        try:
+            output = int(buffer1.getvalue()) == (test_case[0] + test_case[1] + test_case[2])/3
+        except ValueError:
+            try:
+                output = float(buffer1.getvalue()) == (test_case[0] + test_case[1] + test_case[2])/3
+            except:
+                output = False   
+    else:
+        try:
+            output = int(buffer1.getvalue()) == -1
+        except:
+            output = False
+except SyntaxError as er:
+    error = er
+except ValueError:
+    val_err = ValueError("str can not be casted to int")
+except Exception as err:
+    exc = err
+[output, exc, error, val_err]
+            `;
+            
+                let result = await pyodide.runPythonAsync(run);
+                let js_arr = result.toJs();
+                console.log(js_arr[3]);
+                if (js_arr[1])
+                {
+                    document.getElementById("head1").innerText="";
+                    document.getElementById("head2").innerText="";
+                    document.getElementById("1").classList.remove("case_text");
+                    document.getElementById("1").innerText = "";
+
+                    document.getElementById("2").innerText = "";
+                    document.getElementById("2").classList.remove("case_text");
+
+                    document.getElementById("3").innerText = js_arr[1];
+                    document.getElementById("3").classList.remove("case_text");
+                    document.getElementById("3").style.fontSize = "1.5rem";
+
+                    document.getElementById("4").innerText = "";
+                    document.getElementById("4").classList.remove("case_text"); 
+
+                    document.getElementById("5").innerText = "";
+                    document.getElementById("5").classList.remove("case_text"); 
+
+                    document.getElementById("res"+1).innerText ="";
+                    document.getElementById("res"+2).innerText = "";
+                    document.getElementById("res"+3).innerText = "";
+                    document.getElementById("res"+4).innerText = "";
+                    document.getElementById("res"+5).innerText = "";
+
+                    break;
+                }
+                else if (js_arr[2])
+                {
+                    document.getElementById("head1").innerText="";
+                    document.getElementById("head2").innerText="";
+                    document.getElementById("1").classList.remove("case_text");
+                    document.getElementById("1").innerText = "";
+
+                    document.getElementById("2").innerText = "";
+                    document.getElementById("2").classList.remove("case_text");
+
+                    document.getElementById("3").innerText = js_arr[2];
+                    document.getElementById("3").classList.remove("case_text");
+                    document.getElementById("3").style.fontSize = "1.5rem";
+                    document.getElementById("3").style.marginLeft = "1.5rem";
+
+                    document.getElementById("4").innerText = "";
+                    document.getElementById("4").classList.remove("case_text"); 
+
+                    document.getElementById("5").innerText = "";
+                    document.getElementById("5").classList.remove("case_text"); 
+
+                    document.getElementById("res"+1).innerText ="";
+                    document.getElementById("res"+2).innerText = "";
+                    document.getElementById("res"+3).innerText = "";
+                    document.getElementById("res"+4).innerText = "";
+                    document.getElementById("res"+5).innerText = "";
+
+                    break;
+                }
+                
+                else if (js_arr[3])
+                {
+                    document.getElementById("head1").innerText="";
+                    document.getElementById("head2").innerText="";
+                    document.getElementById(String(2)).classList.add("arr_out");
+                    let ins = `Test Case: 
+
+                    inputs = ${cases[i][0]}, ${cases[i][1]}, ${cases[i][2]}`;
+                    document.getElementById(String(2)).innerText = ins;
+
+                    
+
+                    document.getElementById("1").classList.remove("case_text");
+                    document.getElementById("1").innerText = "";
+;
+
+                    document.getElementById("3").innerText = "Error: " + js_arr[3];
+                    document.getElementById("3").classList.remove("case_text");
+                    document.getElementById("3").style.fontSize = "1.5rem";
+
+                    document.getElementById("4").innerText = "";
+                    document.getElementById("4").classList.remove("case_text"); 
+
+                    document.getElementById("5").innerText = "";
+                    document.getElementById("5").classList.remove("case_text"); 
+
+                    document.getElementById("res"+1).innerText ="";
+                    document.getElementById("res"+2).innerText = "";
+                    document.getElementById("res"+3).innerText = "";
+                    document.getElementById("res"+4).innerText = "";
+                    document.getElementById("res"+5).innerText = "";
+                }
+
+                else if (js_arr[0])
+                {
+                    document.getElementById("head1").innerText = "Test Case"
+                    document.getElementById("head2").innerText = "Result"
+                    document.getElementById(String(i+1)).classList.add("arr_out");
+                    let ins = `inputs = ${cases[i][0]}, ${cases[i][1]}, ${cases[i][2]}`;
+                    document.getElementById(String(i+1)).innerText = ins;
+                    document.getElementById("res" + (i+1)).className = "pass";
+                    document.getElementById("res" + (i+1)).innerText = "Passed";
+                    document.getElementById("3").style.fontSize = "2rem";
+                    document.getElementById("3").style.marginLeft = "0";
+                }
+                
+                else
+                {
+                    document.getElementById("head1").innerText = "Test Case"
+                    document.getElementById("head2").innerText = "Result"
+                    document.getElementById(String((i+1))).classList.add("arr_out");
+                    let ins = `inputs = ${cases[i][0]}, ${cases[i][1]}, ${cases[i][2]}`;
+                    document.getElementById(String(i+1)).innerText = ins;
+                    document.getElementById("res" + (i+1)).className = "fail";
+                    document.getElementById("res" + (i+1)).innerText = "Failed";
+                    document.getElementById("3").style.fontSize = "2rem";
+                    document.getElementById("3").style.marginLeft = "0";
+                }
+        }
+    }
+  </script>
   
     </div>
     <div class = "ref">
     <h1>Helpful References:</h1>
-    <ui>
+    
         <li><a href = "../Basics/variables.html">Lesson: Variables and Data Types
         </a></li>
         <li><a href = "../Basics/io.html">Lesson: User Input Handling
         </a></li>
-    </ui>
+    
     </div>
 </body>

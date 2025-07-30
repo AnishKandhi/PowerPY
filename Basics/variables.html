@@ -193,7 +193,8 @@ print(name, character) #Rick B
             The last char has an index of -1, and the index of each previous char counts down.
         </li>
         <li>Slicing: Subsets of a string can be accessed using string_name[start_index : end_index + 1: increment_amount]. 
-            We use end_index + 1 because the slicing parameter only goes from start_index to end_index exclusive.
+            We use end_index + 1 because the slicing parameter only goes from start_index to end_index exclusive. start_index is 0 by default,
+            end_index is the end of the string by defeult, and increment_amount is 1 by default.
         </li>
         <li>f strings: Values of variables do not have to be concatenated, but could be directly placed into an existing 
             string using brackets ({}) with the key character 'f'.
@@ -209,6 +210,9 @@ print(lang[3]) #h
 print(lang[-1]) #n
 print(lang[1:4]) #yth
 print(lang[2:5:2]) #to
+print(lang[::-1]) #nohtyP
+print(lang[4:1:-1]) #oht
+#goes from index 4 to 2
         </code></pre>
         </div>
 

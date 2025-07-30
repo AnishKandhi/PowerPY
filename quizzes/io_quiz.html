@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<head>
+    <Title> PowerPY </Title>
+    <link href = "../styles.css" rel = "stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap" rel="stylesheet">
+<!-- Prism CSS Theme (choose one, e.g., default or dark) -->
+<link href="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/themes/prism.css" rel="stylesheet" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+<!-- Prism JS Core + Language Support (e.g., JavaScript) -->
+<script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/prism.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-python.min.js"></script>
+
+    <style>
+
+       
+        #navbar {
+            background-color: rgb(0,0,0);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-bottom: 0.01em solid white;
+            margin: 0 auto;
+           
+        }
+
+        .nav-link a{
+            white-space: nowrap;
+            font-size: 1.75rem;
+           
+        }
+
+        .nav-link {
+            font-size: 1.5rem;
+            display:flex;
+            justify-content: space-evenly;
+            gap: 5em;
+           
+            margin: 0 auto;
+        }
+
+        
+
+        #t1
+        {
+            font-size: 2.5rem;
+        }
+
+        #t2
+        {
+            font-size: 1.5rem;
+        }
+
+        @media (max-width: 1070px)
+        {
+  
+                #navbar
+                {
+                    flex-direction: column;
+                    
+                }
+                .nav-link
+                {
+                    flex-wrap: wrap;
+                    justify-content: center;
+                    
+                }
+        }
+
+    </style>
+</head>
+
+<body>
+    <div class = "container">
+    <div id = "navbar" style = "border-bottom: none; width: 100%">
+        <div style = "vertical-align: middle; display:flex; align-items: center">
+        <img src = "../imgs/python.png" style = "max-width: 90px; height: auto; vertical-align: middle; 
+        padding: 0 15px; padding-top: .75rem">
+        <span style = "font-weight: bold; padding-left: 1px; color: #E50914" id = "t1"> 
+            PowerPY </span>
+        <span style = "padding-left: 1rem; padding-top: 10px" id = "t2"> Learn to innovate with python </span>
+        </div>
+        <div class = "nav-link">
+        <a>Login</a>
+        <a>Help</a>
+        <a>Reviews</a>
+        </div>
+    </div>
+    <div class = "quiz-space">
+        <div class = "progress">
+            <p>Progress: 0%</p>
+            <div class = "prog-bar">
+                <div class = "prog_amt"></div>
+            </div>
+        </div>
+        <div class = "quiz_head">
+            <a href="../index.html"><i class="fas fa-home" 
+                style = "color: rgb(255, 255, 255); 
+                font-size: 3rem"></i></a>
+            <h1>Question 1/10 </h1>
+            <div id = "navs" style = "display: flex; 
+            height: 100px; width: 22%; height: 60px; gap: 10px">
+                <button id = "prev" onclick = "backQuest()"><i class = "fas fa-arrow-left" 
+                style = "padding-right: 5px"></i> Prev </button>
+                <button id = "next" onclick = "changeQuest()">Next<i class="fas fa-arrow-right" style = "padding-left: 5px;"></i></button>
+            </div>
+        </div>
+        
+        <div class = "quest">
+            <div class = "question">
+            <p>Which line of code correctly prompts the user to enter an integer, and captures the
+    <em>int</em> value from them.</p>
+            <pre><code class = "language-python">I.   num = input("Enter an integer: ")
+II.  num = int(input("Enter an integer: "))
+III. num = float(input("Enter an integer: "))
+IV.  num = Integer(input("Enter an integer: "))</code></pre>
+            </div>
+        <div class = "options">
+            <div class = "option">
+            <input type = "radio" id = "opt1" name ="val0" value = "A">
+            <label for = "opt1">I</label>
+            </div>
+            <div class = "option">
+            <input type = "radio"  id = "opt2" name ="val0" value = "B">
+            <label for = "opt2">II</label>
+            </div>
+            <div class = "option">
+            <input type = "radio"  id = "opt3" name ="val0" value = "C">
+            <label for = "opt3">III</label>
+            </div>
+            <div class = "option">
+            <input type = "radio"  id = "opt4" name ="val0" value = "D">
+            <label for = "opt4">IV</label>
+            </div>
+            </div>
+        </div>
+        <button class = "submit">Submit</button>
+        <script>
+        document.getElementById("prev").style.visibility = 'hidden';
+        document.querySelector(".submit").style.visibility = 'hidden';
+        let val = 0;
+        let index = 0;
+        let quest1 = `
+<p>Which line of code correctly prompts the user to enter an integer, and capture the
+    <em>int</em> value from them?</p>
+<pre><code class = "language-python">I.   num = input("Enter an integer: ")
+II.  num = int(input("Enter an integer: "))
+III. num = float(input("Enter an integer: "))
+IV.  num = Integer(input("Enter an integer: "))</code></pre>
+                    `
+        let quest2 = `
+<p>The input() function by default returns a ____ data type.</p>
+`;
+
+        let quest3 = `
+<p>If the user enters 10 for num1 and 5 for num2, what is the output of the code?</p>
+<pre><code class = "language-python">num1 = input("Enter num1: ")
+num2 = input("Enter num2: ")
+print(num1 / num2)
+</code></pre> 
+`;
+
+        let quest4 = `
+<p>The string parameter of the input() function is the _____.</p>
+`;
+
+        let quest5 = `
+<p>Which of the following exceptions would catch a possible error in this program
+    if it replaced <em>missing code?</em></p>
+<pre><code class = "language-python">try:
+    dividend = int(input("Enter the dividend"))
+    divisor = int(input("Enter the divisor"))
+    print(dividend / divisor)
+except #missing code:</code></pre> 
+`;
+
+
+        let quest6 = `
+<p>Try and except blocks are used to catch ______</p>
+`;
+
+        let quest7 = `  
+<p>What is the code block's final output if the user input is 5.6? </p>
+<pre><code class = "language-python">res = "4"
+try:
+    res += "5"
+    num = int(input("Enter a number"))
+    res += " " + num
+except TypeError:
+    res += 5
+except ValueError:
+    res += 1
+except Exception:
+    res += 0
+print(res)</code></pre> 
+`;
+
+        let quest8 = `
+<p>If the user is supposed to enter a decimal value, the value returned by input() should be
+    the parameter of the ____function.</p>
+`;
+
+        let quest9 = `
+<p>Which of the following is stored in the string <em>s</em> if the user enters 4?</p>
+<pre><code class = "language-python">s = ""
+try:
+    number = input("Enter a number: ")
+    s += number
+except ValueError:
+    s += 1
+except TypeError:
+    s += 2
+else:
+    s += 0
+</code></pre> 
+`;
+
+        let quest10 = `
+<p>What error arises from trying to divide two strings?</p>
+`;
+        let quests = [quest1, quest2, quest3, quest4, quest5, quest6, quest7, quest8, quest9, quest10];
+        let values = new Array(10).fill(null);
+        let choices = [["I", "II", "III", "IV"], ["str", "int", "bool", "float"], 
+        [2, 0.5, 50, "TypeError"], ["input", "prompt", "output", "answer"], 
+        ["TypeError", "ValueError", "KeyError", "NameError"], 
+        ["Definitions", "Output", "User Input", "Exceptions"], ["45 5.6", "450", "451", "4551"], 
+        ["int()", "float()", "str()", "bool()"], ["40", "41", "42", "410"], 
+        ["TypeError", "ValueError", "KeyError", "NameError"]]
+
+        function changeQuest()
+        {
+            document.getElementById("prev").style.visibility = 'visible';
+            if (index == 8)
+            {
+                let str1 = `<button id = "next" onclick = "changeQuest()">Next<i class="fas fa-arrow-right" style = "padding-left: 5px;"></i></button>
+                <button id = "prev" onclick = "backQuest()"><i class = "fas fa-arrow-left" 
+                style = "padding-right: 5px"></i> Prev </button>`
+                document.getElementById("navs").innerHTML = str1;
+                document.getElementById("next").style.visibility = "hidden";
+            }
+
+            else
+            {
+                let str1 = ` <button id = "prev" onclick = "backQuest()"><i class = "fas fa-arrow-left" 
+                style = "padding-right: 5px"></i> Prev </button>
+                <button id = "next" onclick = "changeQuest()">Next<i class="fas fa-arrow-right" style = "padding-left: 5px;"></i></button>`
+                document.getElementById("navs").innerHTML = str1;
+            }
+
+            if (index == 8)
+                document.querySelector(".submit").style.visibility = 'visible';
+            else 
+                document.querySelector(".submit").style.visibility = 'hidden';
+            
+            let filled_val = document.querySelector(".option input:checked")
+            values[index] =  filled_val ? filled_val.value : "";
+            if (index < quests.length-1)
+                index+=1;
+            document.querySelector(".question").innerHTML = quests[index];
+            document.querySelector(".quiz_head h1").textContent = `Question ${index+1}/10`
+            document.querySelectorAll('.option input').forEach(input => {
+            input.checked = false;
+            input.name = `val${index}`;
+            });
+
+            let prog_percent = (values.filter(val => val !== null && val !== "").length/10) * 100;
+            document.querySelector('.prog_amt').style.width = prog_percent + "%";
+            document.querySelector(".progress p").textContent = "Progress: " + prog_percent +"%";
+
+            document.querySelectorAll('.option input').forEach(input => {
+                input.addEventListener('input', () => {
+                values[index] = input.value;
+                let answered = values.filter(val => val !== null && val !== "").length;
+                document.querySelector('.prog_amt').style.width = (answered / 10) * 100 + "%";
+                document.querySelector(".progress p").textContent = "Progress: " + (answered / 10) * 100 + "%";
+                });
+            });
+
+
+            document.querySelector('.option label[for="opt1"]').textContent = choices[index][0];
+            document.querySelector('.option label[for="opt2"]').textContent = choices[index][1];
+            document.querySelector('.option label[for="opt3"]').textContent = choices[index][2];
+            document.querySelector('.option label[for="opt4"]').textContent = choices[index][3];
+            
+            
+
+            if (values[index])
+            {
+                document.querySelector(`.option input[value=${values[index]}]`).checked = true;
+            }
+            
+            
+            if (index % 2 == 1)
+            {
+                document.querySelector(".quest").style.gap = "5rem";
+            }
+
+            else {
+                document.querySelector(".quest").style.gap = "30px";
+            }
+
+
+            Prism.highlightAll();
+        }
+
+        function backQuest()
+        {
+            if (index > 1)
+            {
+                let str1 = ` <button id = "prev" onclick = "backQuest()"><i class = "fas fa-arrow-left" 
+                style = "padding-right: 5px"></i> Prev </button>
+                <button id = "next" onclick = "changeQuest()">Next<i class="fas fa-arrow-right" style = "padding-left: 5px;"></i></button>`
+                document.getElementById("navs").innerHTML = str1;
+            }
+            else
+            {
+                document.getElementById("prev").style.visibility = 'hidden';
+            }
+            
+            document.querySelector(".submit").style.visibility = 'hidden';
+            
+            let filled_val = document.querySelector(".option input:checked");
+            values[index] =  filled_val ? filled_val.value : "";
+            if (index > 0)
+                index -= 1
+            document.querySelector(".question").innerHTML = quests[index];
+            document.querySelector(".quiz_head h1").textContent = `Question ${index+1}/10`
+            document.querySelectorAll('.option input').forEach(input => {
+                input.checked = false;
+            });
+
+            document.querySelector('.option label[for="opt1"]').textContent = choices[index][0];
+            document.querySelector('.option label[for="opt2"]').textContent = choices[index][1];
+            document.querySelector('.option label[for="opt3"]').textContent = choices[index][2];
+            document.querySelector('.option label[for="opt4"]').textContent = choices[index][3];
+            
+            
+
+            if (values[index])
+            {
+                document.querySelector(`.option input[value=${values[index]}]`).checked = true;
+            }
+            
+            if (index % 2 == 1)
+            {
+                document.querySelector(".quest").style.gap = "5rem";
+            }
+
+            else {
+                document.querySelector(".quest").style.gap = "30px";
+            }
+
+            Prism.highlightAll();
+        }
+        </script>
+    </div>
+    </div>
+</body>

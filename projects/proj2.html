@@ -137,6 +137,24 @@
     </div>
     <div class = "output">
     <h1>Output Results</h1>
+    <div class = "test-cases">
+        <div class = "case">
+        <h3 id = "head1"></h3>
+        <p id = "1"></p>
+        <p id = "2"></p>
+        <p id = "3"></p>
+        <p id = "4"></p>
+        <p id = "5"></p>
+        </div>
+        <div class = "result">
+            <h3 id = "head2"></h3>
+            <p id = "res1"></p>
+            <p id = "res2"></p>
+            <p id = "res3"></p>
+            <p id = "res4"></p>
+            <p id = "res5"></p>
+        </div>
+    </div>
     </div>
 
   <!-- Load Ace Editor -->
@@ -154,6 +172,7 @@
     {
         let pyodide = await loadPyodide();
         let code = editor.getValue();
+        let index = 1;
         let str1 = `
 *
 **
@@ -184,7 +203,7 @@
 **
 *
         `
-        ans = {
+        let ans = {
             2: str1,
             3: str4,
             4: str2,
@@ -200,27 +219,121 @@ buffer1 = io.StringIO()
 buffer2 = io.StringIO();
 sys.stdout = buffer1
 sys.stderr = buffer2
+error=""
+exc=""
+error=""
+user_code = """
 ${code}
-createStars(${Number(key)})
+"""
+try:
+    compiled = compile(user_code, "<user_code>", "exec")
+    exec(compiled)
+    createStars(${Number(key)})
+except SyntaxError as er:
+    error = er
+except Exception as err:
+    exc = err
 output = buffer1.getvalue()
-error = buffer2.getvalue()
-output
+[output, exc, error]
             `;
-            let result = await pyodide.runPythonAsync(run);
-            console.log(result.trim()===ans[Number(key)].trim());
+            
+                let result = await pyodide.runPythonAsync(run);
+                let js_arr = result.toJs();
+               
+                if (js_arr[1])
+                {
+                    document.getElementById("head1").innerText="";
+                    document.getElementById("head2").innerText="";
+                    document.getElementById("1").classList.remove("case_text");
+                    document.getElementById("1").innerText = "";
+
+                    document.getElementById("2").innerText = "";
+                    document.getElementById("2").classList.remove("case_text");
+
+                    document.getElementById("3").innerText = js_arr[1];
+                    document.getElementById("3").classList.remove("case_text");
+                    document.getElementById("3").style.fontSize = "1.5rem";
+
+                    document.getElementById("4").innerText = "";
+                    document.getElementById("4").classList.remove("case_text"); 
+
+                    document.getElementById("5").innerText = "";
+                    document.getElementById("5").classList.remove("case_text"); 
+
+                    document.getElementById("res"+1).innerText ="";
+                    document.getElementById("res"+2).innerText = "";
+                    document.getElementById("res"+3).innerText = "";
+                    document.getElementById("res"+4).innerText = "";
+                    document.getElementById("res"+5).innerText = "";
+
+                    break;
+                }
+                else if (js_arr[2])
+                {
+                    document.getElementById("head1").innerText="";
+                    document.getElementById("head2").innerText="";
+                    document.getElementById("1").classList.remove("case_text");
+                    document.getElementById("1").innerText = "";
+
+                    document.getElementById("2").innerText = "";
+                    document.getElementById("2").classList.remove("case_text");
+
+                    document.getElementById("3").innerText = js_arr[2];
+                    document.getElementById("3").classList.remove("case_text");
+                    document.getElementById("3").style.fontSize = "1.5rem";
+                    document.getElementById("3").style.marginLeft = "1.5rem";
+
+                    document.getElementById("4").innerText = "";
+                    document.getElementById("4").classList.remove("case_text"); 
+
+                    document.getElementById("5").innerText = "";
+                    document.getElementById("5").classList.remove("case_text"); 
+
+                    document.getElementById("res"+1).innerText ="";
+                    document.getElementById("res"+2).innerText = "";
+                    document.getElementById("res"+3).innerText = "";
+                    document.getElementById("res"+4).innerText = "";
+                    document.getElementById("res"+5).innerText = "";
+
+                    break;
+                }
+                
+                else if (js_arr[0].trim() === ans[Number(key)].trim())
+                {
+                    document.getElementById("head1").innerText = "Test Case"
+                    document.getElementById("head2").innerText = "Result"
+                    document.getElementById(String(index)).classList.add("case_text");
+                    document.getElementById(String(index)).innerText = `createStars(${Number(key)})`;
+                    document.getElementById("res" + index).className = "pass";
+                    document.getElementById("res" + index).innerText = "Passed";
+                    document.getElementById("3").style.fontSize = "2rem";
+                    document.getElementById("3").style.marginLeft = "0";
+                }
+                
+                else
+                {
+                    document.getElementById("head1").innerText = "Test Case"
+                    document.getElementById("head2").innerText = "Result"
+                    document.getElementById(String(index)).classList.add("case_text");
+                    document.getElementById(String(index)).innerText = `createStars(${Number(key)})`;
+                    document.getElementById("res" + index).className = "fail";
+                    document.getElementById("res" + index).innerText = "Failed";
+                    document.getElementById("3").style.fontSize = "2rem";
+                    document.getElementById("3").style.marginLeft = "0";
+                }
+                             
+                index+=1;
         }
     }
   </script>
     </div>
     <div class = "ref">
     <h1>Helpful References:</h1>
-    <ui>
         <li><a  href = "../logic/cntrlflow.html">Lesson: Conditional Statements
         </a></li>
         <li><a  href = "../logic/functions.html">Lesson: Defining Functions
         </a></li>
         <li><a  href = "../logic/loops.html">Lesson: For and While Loops
         </a></li>
-    </ui>
     </div>
 </body>

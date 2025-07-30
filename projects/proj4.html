@@ -107,26 +107,26 @@
         <div style = "width: 50%; ">
         <h5 class = "inst"><em>Parent Class</em></h5>
         <ul>
-            <li>Named IntMath</li>
-            <li>Has a constructor that initializes the variable num to parameter passed
+            <li>Named <strong>IntMath</strong></li>
+            <li>Has a constructor that initializes the variable <b>num</b> to parameter passed
                 into it
             </li>
-            <li>Has method add() that returns sum of num and one int parameter. 
+            <li>Has method <b>add()</b> that returns sum of num and one int parameter. 
             </li>
-            <li>Has mult() method that returns product of num and one int parameter.
+            <li>Has <b>mult()</b> method that returns product of num and one int parameter.
             </li>
         </ul>
         </div>
         <div style = "width: 50%">
         <h5 class = "inst"><em>Child Class</em></h5>
         <ul>
-            <li>Named FloatMath</li>
+            <li>Named <b>FloatMath</b></li>
             <li>Inherits from the parent class. 
                 Has a constructor that calls the constructor of the parent</li>
-            <li>Has method add() that overrides parent add() method. Should return parent sum() call and 
+            <li>Has method <b>add()</b> that overrides parent add() method. Should return parent add() call and 
                 sum of num and the parameter converted to a float side by side in a string. See sample output for clarifcation.
             </li>
-            <li>Has mult() method that that overrides parent add() method. Should return parent product()
+            <li>Has <b>mult()</b> method that that overrides parent add() method. Should return parent product()
                 as well as float casted product of num and the parameter side by side in a string. 
             </li>
         </ul>
@@ -139,7 +139,7 @@
     <h3 style = "font-size: 1.75rem; margin-left: auto; margin-right: auto; width: 90%"><em>Sample Output</em></h3>
     <pre><code class = "language-python">
 parent = IntMath(5)
-child = floatMath(5)
+child = FloatMath(5)
 print(parent.add(4))
 #Output: 9
 print(child.add(4))
@@ -154,7 +154,7 @@ print(child.add(4))
     <h3 style = "font-size: 1.75rem;  margin-left: auto; margin-right: auto; width: 90%"><em>Sample Output</em></h3>
     <pre><code class = "language-python">
 parent = IntMath(5)
-child = floatMath(5)
+child = FloatMath(5)
 print(parent.mult(4))
 #Output: 20
 print(child.mult(4))
@@ -165,19 +165,41 @@ print(child.mult(4))
     </p>
     </div>
     </div>
+
+   <h2><em>Note: When looking at the test cases, assume p = IntMath(), the parent object,
+    and c = floatMath(), the child object.</em>
+   </h2>
     <div class = "proj_space">
-    
     <div style = "margin-right: auto; margin-left: 40px; width: 60%">
         <div class = "code_buttons">
         <button>Fill Sample Solution</button>
         </div>
     <div id="editor">#Enter python code here</div>
-    <button id = "run">Run Code</button>
+    <button id = "run" onclick = "runPyo()">Run Code</button>
     </div>
-    <div class = "output">
+<div class = "output">
     <h1>Output Results</h1>
+    <div class = "test-cases">
+        <div class = "class_case">
+        <h3 id = "head1"></h3>
+        <p id = "1"></p>
+        <p id = "2"></p>
+        <p id = "3"></p>
+        <p id = "4"></p>
+        <p id = "5"></p>
+        </div>
+        <div class = "result">
+            <h3 id = "head2"></h3>
+            <p id = "res1"></p>
+            <p id = "res2"></p>
+            <p id = "res3"></p>
+            <p id = "res4"></p>
+            <p id = "res5"></p>
+        </div>
     </div>
-
+    </div>
+    </div>
+    
   <!-- Load Ace Editor -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.31.1/ace.js"></script>
   <script>
@@ -188,14 +210,167 @@ print(child.mult(4))
       fontFamily: "monospace",
     });
   </script>
+   <script>
+    async function runPyo()
+    {
+        let pyodide = await loadPyodide();
+        let code = editor.getValue();
+        let ans = {
+            0: ["add", 4, 4, 5],
+            1: ["add", 3, 1, 2],
+            2: ["mult", 10, 100, -2],
+            3: ["mult", -9, 18, 40],
+            4: ["mult", 1, 1, 1]
+        }
+        for (let i = 0; i < 5; i++)
+        {
+            
+            run = `
+import io
+import sys
+error=""
+exc=""
+output=""
+tests = ${pyodide.toPy(ans[i])}
+user_code = """
+${code}
+"""
+try:
+    compiled = compile(user_code, "<user_code>", "exec")
+    exec(compiled)
+    if issubclass(FloatMath, IntMath):
+        if tests[0] == "mult":
+            p = IntMath(tests[1])
+            c = FloatMath(tests[1])
+            bool1 = p.num * tests[2] == p.mult(tests[2])
+            print(bool1)
+            bool2 = str(p.mult(tests[3])) + " " + str(float(p.mult(tests[3]))) == c.mult(tests[3])
+            print(bool2)
+            output = bool1 and bool2
+        else:
+            p = IntMath(tests[1])
+            c = FloatMath(tests[1])
+            bool1 = p.num + tests[2] == p.add(tests[2])
+            print(bool1)
+            bool2 = str(p.add(tests[3])) + " " + str(float(p.add(tests[3]))) == c.add(tests[3])
+            print(bool2)
+            output = bool1 and bool2
+           
+    else:
+        raise Exception("Inheritance is not used here. Review the inheritance lesson below for review")
+except SyntaxError as er:
+    error = er
+except Exception as err:
+    exc = err
+x = [output, exc, error]
+x
+            `;
+            
+            let result = await pyodide.runPythonAsync(run);
+            let js_arr = result.toJs();
+      
+            if (js_arr[1])
+            {
+                document.getElementById("head1").innerText="";
+                document.getElementById("head2").innerText="";
+                document.getElementById("1").classList.remove("case_text");
+                document.getElementById("1").innerText = "";
+
+                document.getElementById("2").innerText = "";
+                document.getElementById("2").classList.remove("case_text");
+
+                document.getElementById("3").innerText = js_arr[1];
+                document.getElementById("3").classList.remove("case_text");
+                document.getElementById("3").style.fontSize = "1.5rem";
+                document.getElementById("3").style.marginLeft = "1.5rem";
+
+                document.getElementById("4").innerText = "";
+                document.getElementById("4").classList.remove("case_text"); 
+
+                document.getElementById("5").innerText = "";
+                document.getElementById("5").classList.remove("case_text"); 
+
+                document.getElementById("res"+1).innerText ="";
+                document.getElementById("res"+2).innerText = "";
+                document.getElementById("res"+3).innerText = "";
+                document.getElementById("res"+4).innerText = "";
+                document.getElementById("res"+5).innerText = ""
+
+                break;
+
+                }
+                else if (js_arr[2])
+                {
+                    document.getElementById("head1").innerText="";
+                    document.getElementById("head2").innerText="";
+                    document.getElementById("1").classList.remove("case_text");
+                    document.getElementById("1").innerText = "";
+
+                    document.getElementById("2").innerText = "";
+                    document.getElementById("2").classList.remove("case_text");
+
+                    document.getElementById("3").innerText = js_arr[2];
+                    document.getElementById("3").classList.remove("case_text");
+                    document.getElementById("3").style.fontSize = "1.5rem";
+                    document.getElementById("3").style.marginLeft = "1.5rem";
+
+                    document.getElementById("4").innerText = "";
+                    document.getElementById("4").classList.remove("case_text"); 
+
+                    document.getElementById("5").innerText = "";
+                    document.getElementById("5").classList.remove("case_text"); 
+
+                    document.getElementById("res"+1).innerText ="";
+                    document.getElementById("res"+2).innerText = "";
+                    document.getElementById("res"+3).innerText = "";
+                    document.getElementById("res"+4).innerText = "";
+                    document.getElementById("res"+5).innerText = "";
+
+                    break;
+                }
+                
+                else if (js_arr[0])
+                {
+                    document.getElementById("head1").innerText = "Test Case";
+                    document.getElementById("head2").innerText = "Result";
+                    document.getElementById(String(i+1)).classList.add("class_out");
+                    let params = ans[i];
+                    let text = `num = ${params[1]}, p.${params[0]}(${params[2]}), 
+                    c.${params[0]}(${params[3]})`
+                    document.getElementById(String(i+1)).innerText = `${text}`;
+                    document.getElementById("res" + (i+1)).className = "pass";
+                    document.getElementById("res" + (i+1)).innerText = "Passed";
+                    document.getElementById("3").style.fontSize = "2rem";
+                    document.getElementById("3").style.marginLeft = "0";
+                  
+                }
+                
+                else
+                {
+                    document.getElementById("head1").innerText = "Test Case";
+                    document.getElementById("head2").innerText = "Result";
+                    document.getElementById(String(i+1)).classList.add("class_out");
+                    let params = ans[i];
+                    let text = `num = ${params[1]}, p.${params[0]}(${params[2]}), 
+                    c.${params[0]}(${params[3]})`
+                    document.getElementById(String(i+1)).innerText = `${text}`;
+                    document.getElementById("res" + (i+1)).className = "fail";
+                    document.getElementById("res" + (i+1)).innerText = "Failed";
+                    document.getElementById("3").style.fontSize = "2rem";
+                    document.getElementById("3").style.marginLeft = "0";
+                }
+                             
+        }
+    }
+  </script>
+    </div>
     </div>
     <div class = "ref">
     <h1>Helpful References:</h1>
-    <ui>
+   
         <li><a href = "../OOP/classes.html">Lesson: Classes and Objects -> Declaration
         </a></li>
         <li><a href = "../OOP/inheritance.html">Lesson: Classes and Objects -> Inheritance
         </a></li>
-    </ui>
     </div>
 </body>
