@@ -257,7 +257,7 @@ try:
             output = bool1 and bool2
            
     else:
-        raise Exception("Inheritance is not used here. Review the inheritance lesson below for review")
+        raise Exception("Inheritance is not used here. Review the inheritance lesson.")
 except SyntaxError as er:
     error = er
 except Exception as err:
@@ -342,7 +342,7 @@ x
                     document.getElementById("res" + (i+1)).innerText = "Passed";
                     document.getElementById("3").style.fontSize = "2rem";
                     document.getElementById("3").style.marginLeft = "0";
-                  
+                    document.querySelector(".class_case p").style.textAlign = "center";
                 }
                 
                 else

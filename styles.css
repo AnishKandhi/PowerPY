@@ -669,10 +669,10 @@ label
 .quiz_head
 {
     position: relative;
-    width: 97%; 
+    width: 95%; 
     margin: 0 auto; 
     display: flex; 
-    justify-content: space-between; 
+    justify-content: space-between;
     align-items: center;
     background-color: black;
     padding: .75rem 1.5rem;
