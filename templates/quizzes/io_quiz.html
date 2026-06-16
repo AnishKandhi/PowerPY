@@ -461,22 +461,29 @@ let quest10 = `
             .then(response => response.json())
             .then(data => 
             {
-                let score = data["score"];
-                let correct_answers = data["correct_answers"];
-                for (let i = 0; i < 10; i++)
-                    answer_key[i] = correct_answers[i];
-                document.getElementById("quest_corr").textContent = `${score}/10`;
-                document.querySelector(".results-space h1").textContent = score / 10 * 100 + "%";
-                document.querySelector(".quiz_head").style.display = 'none';
-                document.querySelector(".quest").style.display = 'none';
-                document.querySelector(".results-space").style.display = 'flex';
-                document.querySelector(".submit").style.visibility = 'hidden';
-                if (score != 10)
-                {
-                    document.getElementById("feed").textContent = `You were ${10-score} questions away from achieving full mastery. Review the quiz and keep trying!`;
+
+                if (data.get("exc")) {
+                    console.log(data["exc"]);
                 }
-                else {
-                    document.getElementById("feed").textContent = `Nice work! You earned a perfect score! Move on to the next lessons to continue your learning.`;
+                else
+                {
+                    let score = data["score"];
+                    let correct_answers = data["correct_answers"];
+                    for (let i = 0; i < 10; i++)
+                        answer_key[i] = correct_answers[i];
+                    document.getElementById("quest_corr").textContent = `${score}/10`;
+                    document.querySelector(".results-space h1").textContent = score / 10 * 100 + "%";
+                    document.querySelector(".quiz_head").style.display = 'none';
+                    document.querySelector(".quest").style.display = 'none';
+                    document.querySelector(".results-space").style.display = 'flex';
+                    document.querySelector(".submit").style.visibility = 'hidden';
+                    if (score != 10)
+                    {
+                        document.getElementById("feed").textContent = `You were ${10-score} questions away from achieving full mastery. Review the quiz and keep trying!`;
+                    }
+                    else {
+                        document.getElementById("feed").textContent = `Nice work! You earned a perfect score! Move on to the next lessons to continue your learning.`;
+                    }
                 }
                     
             })
