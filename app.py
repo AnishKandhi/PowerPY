@@ -6,8 +6,8 @@ from supabase_auth.errors import AuthApiError
 app = Flask(__name__)
 CORS(app)
 app.secret_key = "supersecretkey"
-api_key = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImpyeGx0bGV0YWp0eXFsdHpjc3ByIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc3NzcyODE5MiwiZXhwIjoyMDkzMzA0MTkyfQ.ntWyrb5jlOiReeXSofLkEsZCtnf6HigRt_CXbLFKB80"
-url = "https://jrxltletajtyqltzcspr.supabase.co"
+api_key = os.environ.get("API_KEY")
+url = os.environ.get("PROJECT_URL")
 database = create_client(url, api_key)
 
 @app.route("/")
