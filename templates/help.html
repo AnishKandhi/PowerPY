@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<head>
+    <Title> PowerPY </Title>
+<link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap" rel="stylesheet">
+<!-- Prism CSS Theme (choose one, e.g., default or dark) -->
+<link href="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/themes/prism.css" rel="stylesheet" />
+    <link rel="icon" type="image/png" href="{{ url_for('static', filename='imgs/favi.png') }}">
+
+<!-- Prism JS Core + Language Support (e.g., JavaScript) -->
+<script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/prism.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-python.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        #navbar {
+            background-color: rgb(0,0,0);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-bottom: 0.01em solid white;
+            margin: 0 auto;
+            max-width: 1350px;
+           
+        }
+
+        .nav-link a{
+            white-space: nowrap;
+           
+        }
+
+        .nav-link {
+            font-size: 1.75rem;
+            display:flex;
+            justify-content: space-evenly;
+            gap: 2.5em;
+            margin: 0 auto;
+        }
+
+        #t1
+        {
+            font-size: 2.5rem;
+        }
+
+        #t2
+        {
+            font-size: 1.5rem;
+        }
+
+        @media (max-width: 1070px)
+        {
+  
+                #navbar
+                {
+                    flex-direction: column;
+                    
+                }
+                .nav-link
+                {
+                    flex-wrap: wrap;
+                    justify-content: center;
+                    
+                }
+        }
+
+    </style>
+</head>
+
+<body>
+    <div class = "container">
+    <div id = "navbar">
+        <div style = "vertical-align: middle; display:flex; align-items: center">
+        <img src="{{ url_for('static', filename='imgs/python.png') }}" alt="Logo" style = "max-width: 90px; height: auto; vertical-align: middle; 
+        padding: 0 15px; padding-top: .75rem">
+        <span style = "font-weight: bold; padding-left: 1px; color: #E50914" id = "t1"> 
+            PowerPY </span>
+        <span style = "padding-left: 1rem; padding-top: 10px" id = "t2"> Learn to innovate with python </span>
+        </div>
+        <div class = "nav-link">
+        <a id = "auth">Login</a>
+        <a>Help</a>
+        <a>Reviews</a>
+        </div>
+    </div>
+
+    <div class = "h">
+    <button class = "home" onclick = "window.location.href = '../index.html'">&lt;&lt; Home</button>
+    </div>
+    <h1 style = "text-align: center; font-size: 4em"><em>What is this site?</em></h2>
+    <div class = "sec">
+    <p>This application was made to provide a simple, concise introduction to the python programming language for beginners looking to 
+        enter fields like web development, AI, or data science. 
+    </p>
+
+    </div>
+    <hr>
+    <h2 style = "font-size: 4em"><em>What learning options are there?</em></h2>
+    <div class = "sec">
+    <p> Users may click on the tiles to learn different programming concepts. Each of these tiles provides a lesson with concise explanations
+        and code snippets to provide python examples. At the end of each lesson, there is a multiple choice quiz, which provides a score and
+    an option to review missed questions. After the end of section, users can also complete the project, which provides instructions on solving a coding problem
+and an built-in coding editor for users to write their solutions in. Users can run their code in the browser, and feedback is given with which test cases
+the user's code passed and failed.</p>
+
+    </div>
+
+    <hr>
+    <h2 style = "font-size: 4em"><em>Quiz Scoring Delay Note</em></h2>
+    <div class = "sec">
+    <p>After a period of inactivity, the server that scores the quizzes and authenticates users may sleep temporarily. Therefore, be patient with your first quiz submission
+        or login attempt, as it can sometimes take 10-30 seconds before the server activates and the delays go away.
+    </p>
+    </div>
+    <hr>
+
+    <h2 style = "font-size: 4em"><em>Reviews</em></h2>
+    <div class = "sec">
+    <p> I would like to improve this application to accomodate for the learning needs of the users. If you have a suggestion for a change you would like to 
+        see in this platform, submit a review.
+    </p>
+
+
+    </div>
+
+
+      
+
+    <script src = "{{ url_for('static', filename = 'script.js') }}"></script>
+</body>

@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<head>
+    <Title> PowerPY </Title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <link rel="icon" type="image/png" href="{{ url_for('static', filename='imgs/favi.png') }}">
+
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap" rel="stylesheet">
+<!-- Prism CSS Theme (choose one, e.g., default or dark) -->
+<link href="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/themes/prism.css" rel="stylesheet" />
+
+<!-- Prism JS Core + Language Support (e.g., JavaScript) -->
+<script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/prism.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-python.min.js"></script>
+<script src="https://cdn.jsdelivr.net/pyodide/v0.23.4/full/pyodide.js"></script>
+
+    <style>
+
+      body
+      {
+        padding: 0 15px;
+      }
+        #navbar {
+            background-color: rgb(0,0,0);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-bottom: 0.01em solid white;
+            margin: 0 auto;
+            max-width: 1350px;
+           
+        }
+
+        .nav-link a{
+            white-space: nowrap;
+           
+        }
+
+        .nav-link {
+            font-size: 1.75rem;
+            display:flex;
+            justify-content: space-evenly;
+            gap: 2.5em;
+            margin: 0 auto;
+        }
+
+        
+
+        #t1
+        {
+            font-size: 2.5rem;
+        }
+
+        #t2
+        {
+            font-size: 1.5rem;
+        }
+
+        @media (max-width: 1070px)
+        {
+  
+                #navbar
+                {
+                    flex-direction: column;
+                    
+                }
+                .nav-link
+                {
+                    flex-wrap: wrap;
+                    justify-content: center;
+                    
+                }
+        }
+        
+    </style>
+</head>
+
+<body>
+    <div id = "navbar">
+        <div style = "vertical-align: middle; display:flex; align-items: center">
+        <img src="{{ url_for('static', filename='imgs/python.png') }}" alt="Logo" style = "max-width: 90px; height: auto; vertical-align: middle; 
+        padding: 0 15px; padding-top: .75rem">
+        <span style = "font-weight: bold; padding-left: 1px; color: #E50914" id = "t1"> 
+            PowerPY </span>
+        <span style = "padding-left: 1rem; padding-top: 10px" id = "t2"> Learn to innovate with python </span>
+        </div>
+        <div class = "nav-link">
+        <a id = "auth">Login</a>
+        <a>Help</a>
+        <a>Reviews</a>
+        </div>
+    </div>
+    <button class = "home" onclick = "window.location.href = '../index.html'">&lt;&lt; Home</button>
+    <h2 style = "font-size: 3em">Project 3: Quantity Tracker</h2>
+    <p class = "inst">This project involves writing code for a function, trackNums(nums),
+        which takes in one list of integers named nums. Your task is to iterate through the list,
+        and store the amount of times each number appears in a new dictionary. In the dict,
+        the key for each pair should be the number, and the value should be the frequency of that number.
+        The function should return the new, final dictionary.
+    </p>
+    <div style = "display: flex; background-color: rgb(0,0,0,.3)" class = "samps">
+    <div class = "sample" style = "width: 50%; text-align: center;">
+    <h3 style = "font-size: 1.75rem"><em>trackNums([1, 1, 4, 5])</em></h3>
+    <img src = "{{ url_for('static', filename= 'imgs/dict1.png') }}" style = "width: 60%; padding: 5px 5px"/>
+    <p>In the list, '1' appears twice, while '4' and '5' appear once. So the 
+        key-value pairs are 1:2, 4:1, and 5:1.
+    </p>
+    </div>
+    <div class = "sample" style = "width: 50%; text-align: center;">
+    <h3 style = "font-size: 1.75rem"><em>trackNums([0, 3, 4, 3, 3, 0, 10])</em></h3>
+    <img src = "{{ url_for('static', filename= 'imgs/dict2.png') }}" style = "width: 80%; padding: 5px 5px"/>
+    <p>'0' appears twice, '3' appears 3 times, and '4' and '10' appear once. The pairs are 
+        0:2, 3:3, 4:1, 10:1.
+    </p>
+    </div>
+    </div>
+    <div class = "proj_space">
+  
+    <div id = "edit_space">
+        <div class = "code_buttons">
+        <button>Fill Sample Solution</button>
+        <span style = "font-size: 2rem; font-weight: bold">Score: <span id = "cases_passed"></span></span>
+        </div>
+    <div id="editor">def trackNums(nums):
+    </div>
+    <button id = "run" onclick = "runPyo()">Run Code</button>
+    </div>
+    <div class = "output">
+    <h1>Output Results</h1>
+    <div class = "test-cases">
+        <div class = "case">
+        <h3 id = "head1"></h3>
+        <p id = "1"></p>
+        <p id = "2"></p>
+        <p id = "3"></p>
+        <p id = "4"></p>
+        <p id = "5"></p>
+        </div>
+        <div class = "result">
+            <h3 id = "head2"></h3>
+            <p id = "res1"></p>
+            <p id = "res2"></p>
+            <p id = "res3"></p>
+            <p id = "res4"></p>
+            <p id = "res5"></p>
+        </div>
+    </div>
+    </div>
+    </div>
+    
+  <!-- Load Ace Editor -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.31.1/ace.js"></script>
+  <script>
+    let editor = ace.edit("editor");
+    editor.setTheme("ace/theme/monokai");
+    editor.session.setMode("ace/mode/python");
+    editor.setOptions({
+      fontFamily: "monospace",
+    });
+  </script>
+   <script>
+    async function runPyo()
+    {
+        let pyodide = await loadPyodide();
+        let code = editor.getValue();
+        let score = 0;
+        cases = [[1, 1, 4, 5], [0, 3, 4, 3, 3, 0, 10], [9, 3, 2], [100, 99, 100], [1, 1, 1, 1]]
+        let ans = {
+            0: {1: 2, 4: 1, 5: 1},
+            1: {0: 2, 3: 3, 4: 1, 10: 1},
+            2: {9: 1, 3: 1, 2: 1},
+            3: {100: 2, 99: 1},
+            4: {1: 4}
+        }
+        for (let i = 0; i < 5; i++)
+        {
+            
+            run = `
+import io
+import sys
+import json
+buffer1 = io.StringIO()
+buffer2 = io.StringIO();
+sys.stdout = buffer1
+sys.stderr = buffer2
+error=""
+exc=""
+output=""
+user_code = """
+${code}
+"""
+try:
+    compiled = compile(user_code, "<user_code>", "exec")
+    exec(compiled)
+    output = trackNums(${pyodide.toPy(cases[i])})
+except SyntaxError as er:
+    error = er
+except Exception as err:
+    exc = err
+[json.dumps(output, separators=(",", ":"), sort_keys=True), exc, error]
+            `;
+            
+            let result = await pyodide.runPythonAsync(run);
+            let js_arr = result.toJs();
+            console.log(JSON.stringify(ans[i]));  
+            console.log(JSON.stringify(js_arr[0]));  
+            if (js_arr[1])
+            {
+                document.getElementById("head1").innerText="";
+                document.getElementById("head2").innerText="";
+                document.getElementById("1").classList.remove("case_text");
+                document.getElementById("1").innerText = "";
+
+                document.getElementById("2").innerText = "";
+                document.getElementById("2").classList.remove("case_text");
+
+                document.getElementById("3").innerText = js_arr[1];
+                document.getElementById("3").classList.remove("case_text");
+                document.getElementById("3").style.fontSize = "1.5rem";
+                document.getElementById("3").style.marginLeft = "1.5rem";
+
+                document.getElementById("4").innerText = "";
+                document.getElementById("4").classList.remove("case_text"); 
+
+                document.getElementById("5").innerText = "";
+                document.getElementById("5").classList.remove("case_text"); 
+
+                document.getElementById("res"+1).innerText ="";
+                document.getElementById("res"+2).innerText = "";
+                document.getElementById("res"+3).innerText = "";
+                document.getElementById("res"+4).innerText = "";
+                document.getElementById("res"+5).innerText = ""
+
+                break;
+
+                }
+                else if (js_arr[2])
+                {
+                    document.getElementById("head1").innerText="";
+                    document.getElementById("head2").innerText="";
+                    document.getElementById("1").classList.remove("case_text");
+                    document.getElementById("1").innerText = "";
+
+                    document.getElementById("2").innerText = "";
+                    document.getElementById("2").classList.remove("case_text");
+
+                    document.getElementById("3").innerText = js_arr[2];
+                    document.getElementById("3").classList.remove("case_text");
+                    document.getElementById("3").style.fontSize = "1.5rem";
+                    document.getElementById("3").style.marginLeft = "1.5rem";
+
+                    document.getElementById("4").innerText = "";
+                    document.getElementById("4").classList.remove("case_text"); 
+
+                    document.getElementById("5").innerText = "";
+                    document.getElementById("5").classList.remove("case_text"); 
+
+                    document.getElementById("res"+1).innerText ="";
+                    document.getElementById("res"+2).innerText = "";
+                    document.getElementById("res"+3).innerText = "";
+                    document.getElementById("res"+4).innerText = "";
+                    document.getElementById("res"+5).innerText = "";
+
+                    break;
+                }
+                
+                else if (js_arr[0] == JSON.stringify(ans[i]))
+                {
+                    document.getElementById("head1").innerText = "Test Case"
+                    document.getElementById("head2").innerText = "Result"
+                    document.getElementById(String(i+1)).classList.add("arr_out");
+                    document.getElementById(String(i+1)).innerText = `nums = ${pyodide.toPy(cases[i])}`;
+                    document.getElementById("res" + (i+1)).className = "pass";
+                    document.getElementById("res" + (i+1)).innerText = "Passed";
+                    document.getElementById("3").style.fontSize = "2rem";
+                    document.getElementById("3").style.marginLeft = "0";
+                    score++;
+                    console.log(76);
+                }
+                
+                else
+                {
+                    document.getElementById("head1").innerText = "Test Case"
+                    document.getElementById("head2").innerText = "Result"
+                    document.getElementById(String(i+1)).classList.add("arr_out");
+                    document.getElementById(String(i+1)).innerText = `nums = ${pyodide.toPy(cases[i])}`;
+                    document.getElementById("res" + (i+1)).className = "fail";
+                    document.getElementById("res" + (i+1)).innerText = "Failed";
+                    document.getElementById("3").style.fontSize = "2rem";
+                    document.getElementById("3").style.marginLeft = "0";
+                }               
+        }
+
+        if (score == 5)
+        {
+            document.getElementById("cases_passed").innerText = score + "/5";
+            document.getElementById("cases_passed").style.color = "green";
+        }
+        else
+        {
+            
+            
+            document.getElementById("cases_passed").innerText = score + "/5";
+            document.getElementById("cases_passed").style.color = "red";
+        }
+        
+    }
+  </script>
+    </div>
+    </div>
+    <div class = "ref">
+
+    <h1>Helpful References:</h1>
+   
+        <li><a href = "../data_structures/lists.html">Lesson: Lists
+        </a></li>
+        <li><a href = "../data_structures/dicts.html">Lesson: Dictionaries
+        </a></li>
+    
+    </div>
+    <script src = "{{ url_for('static', filename = 'script.js') }}"></script>
+</body>

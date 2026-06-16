@@ -1,0 +1,590 @@
+<!DOCTYPE html>
+<head>
+    <Title> PowerPY </Title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap" rel="stylesheet">
+<!-- Prism CSS Theme (choose one, e.g., default or dark) -->
+<link href="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/themes/prism.css" rel="stylesheet" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="icon" type="image/png" href="{{ url_for('static', filename='imgs/favi.png') }}">
+
+<!-- Prism JS Core + Language Support (e.g., JavaScript) -->
+<script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/prism.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-python.min.js"></script>
+
+    <style>
+
+       
+        #navbar {
+            background-color: rgb(0,0,0);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-bottom: 0.01em solid white;
+            margin: 0 auto;
+           
+        }
+
+        .nav-link a{
+            white-space: nowrap;
+            font-size: 1.75rem;
+           
+        }
+
+        .nav-link {
+            font-size: 1.75rem;
+            display:flex;
+            justify-content: space-evenly;
+            gap: 5em;
+           
+            margin: 0 auto;
+        }
+
+        
+
+        #t1
+        {
+            font-size: 2.5rem;
+        }
+
+        #t2
+        {
+            font-size: 1.5rem;
+        }
+
+        @media (max-width: 1070px)
+        {
+  
+                #navbar
+                {
+                    flex-direction: column;
+                    
+                }
+                .nav-link
+                {
+                    flex-wrap: wrap;
+                    justify-content: center;
+                    
+                }
+        }
+
+    </style>
+</head>
+
+<body>
+    <div class = "container">
+    <div id = "navbar" style = "border-bottom: none; width: 100%">
+        <div style = "vertical-align: middle; display:flex; align-items: center">
+        <img src="{{ url_for('static', filename='imgs/python.png') }}" alt="Logo" style = "max-width: 90px; height: auto; vertical-align: middle; 
+        padding: 0 15px; padding-top: .75rem">
+        <span style = "font-weight: bold; padding-left: 1px; color: #E50914" id = "t1"> 
+            PowerPY </span>
+        <span style = "padding-left: 1rem; padding-top: 10px" id = "t2"> Learn to innovate with python </span>
+        </div>
+        <div class = "nav-link">
+        <a id = "auth">Login</a>
+        <a>Help</a>
+        <a>Reviews</a>
+        </div>
+    </div>
+    <div class = "quiz-space">
+        <div class = "progress">
+            <p>Progress: 0%</p>
+            <div class = "prog-bar">
+                <div class = "prog_amt"></div>
+            </div>
+        </div>
+        <div class = "quiz_head">
+            <a href="../index.html"><i class="fas fa-home" 
+                style = "color: rgb(255, 255, 255); 
+                font-size: 3rem"></i></a>
+            <h1>Question 1/10 </h1>
+            <div id = "navs" style = "display: flex; 
+            height: 100px; width: 22%; height: 60px; gap: 10px">
+                <button id = "prev" onclick = "backQuest()"><i class = "fas fa-arrow-left" 
+                style = "padding-right: 5px"></i> Prev </button>
+                <button id = "next" onclick = "changeQuest()">Next<i class="fas fa-arrow-right" style = "padding-left: 5px;"></i></button>
+            </div>
+        </div>
+        
+        <div class = "quest">
+            <div class = "question" style = "position: relative">
+            <p>What is printed by the function call for *<span class = "code_font">get_val()</span>*?</p>
+            <pre><code class = "language-python">def get_val(d, d_key):
+    print(d[d_key][-1])
+
+dictionary = {"name": "Kevin", "id": 173, "grade": 8}
+get_val(dictionary, "name")
+</code></pre>
+            </div>
+        <div class = "options">
+            <div class = "option">
+            <input type = "radio" id = "opt1" name ="val0" value = "A">
+            <label for = "opt1">K</label>
+            </div>
+            <div class = "option">
+            <input type = "radio"  id = "opt2" name ="val0" value = "B">
+            <label for = "opt2">n</label>
+            </div>
+            <div class = "option">
+            <input type = "radio"  id = "opt3" name ="val0" value = "C">
+            <label for = "opt3">3</label>
+            </div>
+            <div class = "option">
+            <input type = "radio"  id = "opt4" name ="val0" value = "D">
+            <label for = "opt4">e</label>
+            </div>
+            </div>
+        </div>
+        <div class = "results-space">
+        <a href="../index.html"><i class="fas fa-home"
+                style = "color: rgb(255, 255, 255);
+                font-size: 3rem; margin-right: auto; position: absolute;
+                left: 1%; top: 2%"></i></a>
+        <p>Your quiz score: <span id = "quest_corr"></span></p>
+        <h1></h1>
+        <p id = "feed" style = "margin-top: 0; font-size: 2rem;
+        width: fit-content; max-width: 90%; text-align: center; padding-right: 0;"></p>
+        <div class = "result_buttons">
+        <button id = "review">Review quiz</button>
+        <button id = "retake">Retake quiz</button>
+        </div>
+        </div>
+        <button class = "submit">Submit</button>
+        <script>
+        document.getElementById("prev").style.visibility = 'hidden';
+        document.querySelector(".submit").style.visibility = 'hidden';
+        document.querySelector(".results-space").style.display = 'none';
+        let val = 0;
+        let index = 0;
+let quest1 = `
+<p>What is printed by the function call for *<span class="code_font">get_val()</span>*?</p>
+<span id = "check" style = "position: absolute; right: 3%; top: 0%; font-size: 5rem; color: #28a745"></span>
+<pre><code class = "language-python">def get_val(d, d_key):
+    print(d[d_key][-1])
+
+    dictionary = {"name": "Kevin", "id": 173, "grade": 8}
+    get_val(dictionary, "name")
+</code></pre>
+`;
+
+let quest2 = `
+<p>What is the *<span class="code_font">dict</span>* function used to remove a pair by its key?</p>
+<span id = "check" style = "position: absolute; right: 3%; top: 0%; font-size: 5rem; color: #28a745"></span>
+`;
+
+let quest3 = `
+<p>What are the contents of *<span class="code_font">result_list</span>* as a result of this program?</p>
+<span id = "check" style = "position: absolute; right: 3%; top: 0%; font-size: 5rem; color: #28a745"></span>
+<pre><code class = "language-python">dictionary = {
+    "name": "Josh", 
+    "id": 173, 
+    "grade": 9
+}
+
+result_list = []
+dictionary.update({"car": "BMW", "subject": "bio"})
+for k in dictionary.keys():
+    if k.find('e') != -1:
+        result_list.append(dictionary[k])
+
+A.  ["Josh", 9]
+B.  ["Josh", 9, "bio"]
+C.  ["name", "grade", "subject"]
+D.  [173, "BMW"]
+</code></pre>
+`;
+
+let quest4 = `
+<p>Which *<span class="code_font">dict</span>* function creates a list of tuples with key-value pairs?</p>
+<span id = "check" style = "position: absolute; right: 3%; top: 0%; font-size: 5rem; color: #28a745"></span>
+`;
+
+let quest5 = `
+<p>What line of code should replace <em>#missing code</em> so that *<span class="code_font">sum</span>* has a value of -2?</p><span id = "check" style = "position: absolute; right: 3%; top: 0%; font-size: 5rem; color: #28a745"></span>
+<pre><code class = "language-python">sum = 0
+pairs = {
+    2: 3,
+    4: 1,
+    3, -4
+}
+for i, j in pairs.items():
+    #missing code
+
+I.   sum += i + j
+II.  sum += i * j
+III. sum += i * -1
+IV.  sum = i ** j
+</code></pre>
+`;
+
+let quest6 = `
+<p>The *<span class="code_font">keys()</span>* and *<span class="code_font">values()</span>* functions always return a ______.</p>
+<span id = "check" style = "position: absolute; right: 3%; top: 0%; font-size: 5rem; color: #28a745"></span>
+`;
+
+let quest7 = `
+<p>What is the output of the program below using *<span class="code_font">list_dict</span>*?</p>
+<span id = "check" style = "position: absolute; right: 3%; top: 0%; font-size: 5rem; color: #28a745"></span>
+<pre><code class = "language-python">sum = 0
+list_dict = {
+    17: [4, 1, 90, 43],
+    -3: [2, 3, 10, -4],
+    -9: [5, -3],
+    91: [78, 32, 2, 6],
+   -10: [3, 4, 1]
+}
+for x in list_dict.keys():
+    if x < 0:
+        for y in list_dict[x]:
+            sum += y
+print(sum)
+</code></pre>
+`;
+
+let quest8 = `
+<p>Which *<span class="code_font">dict</span>* function takes another dictionary as the parameter?</p>
+<span id = "check" style = "position: absolute; right: 3%; top: 0%; font-size: 5rem; color: #28a745"></span>
+`;
+
+let quest9 = `
+<p>What is the value of the string *<span class="code_font">s</span>* after the program is executed?</p>
+<span id = "check" style = "position: absolute; right: 3%; top: 0%; font-size: 5rem; color: #28a745"></span>
+<pre><code class = "language-python">dictionary = {
+"rank": 24, 
+"id": 173, 
+"grade": 9
+}
+
+s = ""
+del dictionary["rank"]
+dictionary["height_inches"]  = 66
+for i, j in dictionary.items():
+    if j % 3 == 0:
+        s += i + " "
+</code></pre>
+`;
+
+let quest10 = `
+<p>Which of the following data types can NOT be a key for a dictionary?</p>
+<span id = "check" style = "position: absolute; right: 3%; top: 0%; font-size: 5rem; color: #28a745"></span>
+`;
+        let quests = [quest1, quest2, quest3, quest4, quest5, quest6, quest7, quest8, quest9, quest10];
+        let values = new Array(10).fill(null);
+        let answer_key = new Array(10).fill(null);
+        let in_review = false;
+        let choices = [["K", "n", "3", "e"], ["del()", "keys()", "pop()", "remove()"], 
+        ["A", "B", "C", "D"], 
+        ["keys()", "values()", "pairs()", "items()"], ["I", "II", "III", "IV"], 
+        ["tuple", "list", "view obj", "dict"], ["21", "118", "35", "138"], 
+        ["pop()", "update()", "items()", "clear()"], ["A", "B", "C", "D"], 
+        ["list", "string", "tuple", "int"]]
+
+        function changeQuest()
+        {
+            document.getElementById("prev").style.visibility = 'visible';
+            if (index == 8)
+            {
+                let str1 = `<button id = "next" onclick = "changeQuest()">Next<i class="fas fa-arrow-right" style = "padding-left: 5px;"></i></button>
+                <button id = "prev" onclick = "backQuest()"><i class = "fas fa-arrow-left" 
+                style = "padding-right: 5px"></i> Prev </button>`
+                document.getElementById("navs").innerHTML = str1;
+                document.getElementById("next").style.visibility = "hidden";
+            }
+
+            else
+            {
+                let str1 = ` <button id = "prev" onclick = "backQuest()"><i class = "fas fa-arrow-left" 
+                style = "padding-right: 5px"></i> Prev </button>
+                <button id = "next" onclick = "changeQuest()">Next<i class="fas fa-arrow-right" style = "padding-left: 5px;"></i></button>`
+                document.getElementById("navs").innerHTML = str1;
+            }
+
+            if (index == 8 && !in_review)
+                document.querySelector(".submit").style.visibility = 'visible';
+            else 
+                document.querySelector(".submit").style.visibility = 'hidden';
+            
+            let filled_val = document.querySelector(".option input:checked")
+            values[index] =  filled_val ? filled_val.value : "";
+            if (index < quests.length-1)
+                index+=1;
+            document.querySelector(".question").innerHTML = quests[index];
+            document.querySelector(".quiz_head h1").textContent = `Question ${index+1}/10`
+            document.querySelectorAll('.option input').forEach(input => {
+            input.checked = false;
+            input.name = `val${index}`;
+            });
+
+            let prog_percent = (values.filter(val => val !== null && val !== "").length/10) * 100;
+            document.querySelector('.prog_amt').style.width = prog_percent + "%";
+            document.querySelector(".progress p").textContent = "Progress: " + prog_percent +"%";
+
+            document.querySelectorAll('.option input').forEach(input => {
+                input.addEventListener('input', () => {
+                values[index] = input.value;
+                let answered = values.filter(val => val !== null && val !== "").length;
+                document.querySelector('.prog_amt').style.width = (answered / 10) * 100 + "%";
+                document.querySelector(".progress p").textContent = "Progress: " + (answered / 10) * 100 + "%";
+                });
+            });
+
+
+            document.querySelector('.option label[for="opt1"]').textContent = choices[index][0];
+            document.querySelector('.option label[for="opt2"]').textContent = choices[index][1];
+            document.querySelector('.option label[for="opt3"]').textContent = choices[index][2];
+            document.querySelector('.option label[for="opt4"]').textContent = choices[index][3];
+            
+            
+
+            if (in_review)
+            {
+                document.querySelectorAll('.option label').forEach(label => {
+                label.style.borderColor = "#ccc";
+                label.style.pointerEvents = "none";
+                });
+                let correct_val = document.querySelector(`.option input[value="${answer_key[index]}"] + label`);
+                if (values[index] == answer_key[index])
+                {
+                    document.getElementById("check").textContent = "✔";
+                    document.getElementById("check").style.color = "#28a745";
+                }
+                else
+                {
+                    document.getElementById("check").textContent = "✖";
+                    document.getElementById("check").style.color = "#dc3545";
+                }
+                if (values[index] && values[index] != answer_key[index])
+                {
+                    document.querySelector(`.option input[value=${values[index]}]`).checked = true;
+                    document.querySelector(`.option input[value="${values[index]}"] + label`).style.borderColor = "#E50914";
+                }
+                else if (values[index])
+                {
+                    document.querySelector(`.option input[value=${values[index]}]`).checked = true;
+                    correct_val.style.borderColor = "#28a745";
+                }
+                correct_val.style.borderColor = "#28a745";
+
+            }
+            else
+            {
+                if (values[index])
+                {
+                    document.querySelector(`.option input[value=${values[index]}]`).checked = true;
+                }
+            }
+            
+            
+            if (index % 2 == 1)
+            {
+                document.querySelector(".quest").style.gap = "5rem";
+            }
+
+            else {
+                document.querySelector(".quest").style.gap = "30px";
+            }
+
+
+            Prism.highlightAll();
+        }
+
+        function backQuest()
+        {
+            if (index > 1)
+            {
+                let str1 = ` <button id = "prev" onclick = "backQuest()"><i class = "fas fa-arrow-left" 
+                style = "padding-right: 5px"></i> Prev </button>
+                <button id = "next" onclick = "changeQuest()">Next<i class="fas fa-arrow-right" style = "padding-left: 5px;"></i></button>`
+                document.getElementById("navs").innerHTML = str1;
+            }
+            else
+            {
+                document.getElementById("prev").style.visibility = 'hidden';
+            }
+            
+            document.querySelector(".submit").style.visibility = 'hidden';
+            
+            let filled_val = document.querySelector(".option input:checked");
+            values[index] =  filled_val ? filled_val.value : "";
+            if (index > 0)
+                index -= 1
+            document.querySelector(".question").innerHTML = quests[index];
+            document.querySelector(".quiz_head h1").textContent = `Question ${index+1}/10`
+            document.querySelectorAll('.option input').forEach(input => {
+                input.checked = false;
+            });
+
+            document.querySelector('.option label[for="opt1"]').textContent = choices[index][0];
+            document.querySelector('.option label[for="opt2"]').textContent = choices[index][1];
+            document.querySelector('.option label[for="opt3"]').textContent = choices[index][2];
+            document.querySelector('.option label[for="opt4"]').textContent = choices[index][3];
+            
+            
+
+            if (in_review)
+            {
+                document.querySelectorAll('.option label').forEach(label => {
+                label.style.borderColor = "#ccc";
+                label.style.pointerEvents = "none";
+                });
+                let correct_val = document.querySelector(`.option input[value="${answer_key[index]}"] + label`);
+                if (values[index] == answer_key[index])
+                {
+                    document.getElementById("check").textContent = "✔";
+                    document.getElementById("check").style.color = "#28a745";
+                }
+                else
+                {
+                    document.getElementById("check").textContent = "✖";
+                    document.getElementById("check").style.color = "#dc3545";
+                }
+                if (values[index] && values[index] != answer_key[index])
+                {
+                    document.querySelector(`.option input[value=${values[index]}]`).checked = true;
+                    document.querySelector(`.option input[value="${values[index]}"] + label`).style.borderColor = "#E50914";
+                }
+                else if (values[index])
+                {
+                    document.querySelector(`.option input[value=${values[index]}]`).checked = true;
+                    correct_val.style.borderColor = "#28a745";
+                }
+                correct_val.style.borderColor = "#28a745";
+
+            }
+            else
+            {
+                if (values[index])
+                {
+                    document.querySelector(`.option input[value=${values[index]}]`).checked = true;
+                }
+            }
+            
+            if (index % 2 == 1)
+            {
+                document.querySelector(".quest").style.gap = "5rem";
+            }
+
+            else {
+                document.querySelector(".quest").style.gap = "30px";
+            }
+
+            Prism.highlightAll();
+        }
+
+        document.querySelector(".submit").addEventListener('click', () =>
+        {
+            fetch("/api/score71", {
+                method: "POST",
+                headers: {"Content-Type": "application/json"},
+                body: JSON.stringify({answers: values})
+            })
+            .then(response => response.json())
+            .then(data => 
+            {
+                let score = data["score"];
+                let correct_answers = data["correct_answers"];
+                for (let i = 0; i < 10; i++)
+                    answer_key[i] = correct_answers[i];
+                document.getElementById("quest_corr").textContent = `${score}/10`;
+                document.querySelector(".results-space h1").textContent = score / 10 * 100 + "%";
+                document.querySelector(".quiz_head").style.display = 'none';
+                document.querySelector(".quest").style.display = 'none';
+                document.querySelector(".results-space").style.display = 'flex';
+                document.querySelector(".submit").style.visibility = 'hidden';
+                if (score != 10)
+                {
+                    document.getElementById("feed").textContent = `You were ${10-score} questions away from achieving full mastery. Review the quiz and keep trying!`;
+                }
+                else {
+                    document.getElementById("feed").textContent = `Nice work! You earned a perfect score! Move on to the next lessons to continue your learning.`;
+                }
+            })
+        })
+
+        document.getElementById("retake").addEventListener('click', () => {
+            index = 0;
+            values = new Array(10).fill(null);
+            document.querySelector(".quiz_head").style.display = 'flex';
+            document.querySelector(".quest").style.display = 'flex';
+            document.querySelector(".results-space").style.display = 'none';
+            document.querySelector(".question").innerHTML = quests[index];
+            document.querySelector(".quiz_head h1").textContent = `Question ${index+1}/10`;
+            document.querySelector(".quest").style.gap = "30px";
+            let str1 = ` <button id = "prev" onclick = "backQuest()"><i class = "fas fa-arrow-left" 
+            style = "padding-right: 5px"></i> Prev </button>
+            <button id = "next" onclick = "changeQuest()">Next<i class="fas fa-arrow-right" style = "padding-left: 5px;"></i></button>`
+            document.getElementById("navs").innerHTML = str1;
+            document.getElementById("prev").style.visibility = 'hidden';
+            document.querySelector(".prog_amt").style.width = "0";
+            document.querySelector(".progress p").textContent = "Progress: 0%";
+            document.querySelectorAll('.option input').forEach(input => {
+                input.checked = false;
+                input.name = `val${index}`;
+            });
+            document.querySelector('.option label[for="opt1"]').textContent = choices[index][0];
+            document.querySelector('.option label[for="opt2"]').textContent = choices[index][1];
+            document.querySelector('.option label[for="opt3"]').textContent = choices[index][2];
+            document.querySelector('.option label[for="opt4"]').textContent = choices[index][3];
+            Prism.highlightAll();
+        })
+
+        document.getElementById("review").addEventListener('click', () => {
+            index = 0;
+            in_review = true;
+            document.querySelectorAll('.option label').forEach(label => {
+                label.style.pointerEvents = "none";
+            });
+            document.querySelector(".quiz_head").style.display = 'flex';
+            document.querySelector(".quest").style.display = 'flex';
+            document.querySelector(".results-space").style.display = 'none';
+            document.querySelector(".question").innerHTML = quests[index];
+            document.querySelector(".quiz_head h1").textContent = `Question ${index+1}/10`;
+            document.querySelector(".quest").style.gap = "30px";
+            let str1 = ` <button id = "prev" onclick = "backQuest()"><i class = "fas fa-arrow-left" 
+            style = "padding-right: 5px"></i> Prev </button>
+            <button id = "next" onclick = "changeQuest()">Next<i class="fas fa-arrow-right" style = "padding-left: 5px;"></i></button>`
+            document.getElementById("navs").innerHTML = str1;
+            document.getElementById("prev").style.visibility = 'hidden';
+            let correct_val = document.querySelector(`.option input[value="${answer_key[index]}"] + label`);
+            correct_val.style.borderColor = "#28a745";
+            if (values[index] == answer_key[index])
+            {
+                document.getElementById("check").textContent = "✔";
+                document.getElementById("check").style.color = "#28a745";
+            }
+            else
+            {
+                document.getElementById("check").textContent = "✖";
+                document.getElementById("check").style.color = "#dc3545";
+            }
+            document.querySelector('.option label[for="opt1"]').textContent = choices[index][0];
+            document.querySelector('.option label[for="opt2"]').textContent = choices[index][1];
+            document.querySelector('.option label[for="opt3"]').textContent = choices[index][2];
+            document.querySelector('.option label[for="opt4"]').textContent = choices[index][3];
+            
+            if (values[index] && values[index] != answer_key[index])
+            {
+                document.querySelector(`.option input[value=${values[index]}]`).checked = true;
+                document.querySelector(`.option input[value="${values[index]}"] + label`).style.borderColor = "#E50914";                }
+            else if (values[index])
+            {
+                document.querySelector(`.option input[value=${values[index]}]`).checked = true;
+                correct_val.style.borderColor = "#28a745";
+            }
+
+            correct_val.style.borderColor = "#28a745";
+            Prism.highlightAll();
+        })
+
+        </script>
+    </div>
+    </div>
+    <script src = "{{ url_for('static', filename = 'script.js') }}"></script>
+</body>

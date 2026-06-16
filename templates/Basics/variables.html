@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<head>
+    <Title> PowerPY </Title>
+<link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap" rel="stylesheet">
+<!-- Prism CSS Theme (choose one, e.g., default or dark) -->
+<link href="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/themes/prism.css" rel="stylesheet" />
+    <link rel="icon" type="image/png" href="{{ url_for('static', filename='imgs/favi.png') }}">
+
+<!-- Prism JS Core + Language Support (e.g., JavaScript) -->
+<script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/prism.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-python.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        #navbar {
+            background-color: rgb(0,0,0);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-bottom: 0.01em solid white;
+            margin: 0 auto;
+            max-width: 1350px;
+           
+        }
+
+        .nav-link a{
+            white-space: nowrap;
+           
+        }
+
+        .nav-link {
+            font-size: 1.75rem;
+            display:flex;
+            justify-content: space-evenly;
+            gap: 2.5em;
+            margin: 0 auto;
+        }
+
+        #t1
+        {
+            font-size: 2.5rem;
+        }
+
+        #t2
+        {
+            font-size: 1.5rem;
+        }
+
+        @media (max-width: 1070px)
+        {
+  
+                #navbar
+                {
+                    flex-direction: column;
+                    
+                }
+                .nav-link
+                {
+                    flex-wrap: wrap;
+                    justify-content: center;
+                    
+                }
+        }
+
+        
+    </style>
+</head>
+
+<body>
+    <div class = "container">
+    <div id = "navbar">
+        <div style = "vertical-align: middle; display:flex; align-items: center">
+        <img src="{{ url_for('static', filename='imgs/python.png') }}" alt="Logo" style = "max-width: 90px; height: auto; vertical-align: middle; 
+        padding: 0 15px; padding-top: .75rem">
+        <span style = "font-weight: bold; padding-left: 1px; color: #E50914" id = "t1"> 
+            PowerPY </span>
+        <span style = "padding-left: 1rem; padding-top: 10px" id = "t2"> Learn to innovate with python </span>
+        </div>
+        <div class = "nav-link">
+        <a id = "auth">Login</a>
+        <a>Help</a>
+        <a>Reviews</a>
+        </div>
+    </div>
+
+    <div class = "h">
+    <button class = "home" onclick = "window.location.href = '../index.html'">&lt;&lt; Home</button>
+    </div>
+    <h1 style = "text-align: center; font-size: 4em"><em>Variables in Python</em></h2>
+    <div class = "sec">
+    <p>A variable is a name used to store a specific value. Variables can be in the form of integers, strings, 
+        boolean, floats, and data structures like lists and dictionaries. 
+        We will learn about each of these <b>data types</b> further in this lesson. 
+        In the image to the right, x stores an integer, name stores a string, and is_tall stores a 
+        boolean value the variable x.</p>
+        <div class = "codes" id = "code1">
+        <pre><code class = "language-python">
+x = 7
+name = "John"
+is_tall = True
+        </code></pre>
+        </div>
+
+    </div>
+    <hr>
+    <h2 style = "font-size: 4em"><em>Integer (int)</em></h2>
+    <div class = "sec">
+    <p> An integer is a whole number. A variable of data type <em>int</em> can only store a whole number and not a 
+        decimal. Storing a decimal number in an integer results in a value error. Remember that the "=" sign is an 
+        assignment operator, meaning it assigns a value to the variable. </p>
+        <div class = "codes">
+        <pre><code class = "language-python">
+x = 25
+y = 100
+number = 65
+num = 6.5 #Not an int
+print(y + x) #125
+print(y - x) #75 
+print(y * x) #2500
+print(y / x) #4
+        </code></pre>
+        </div>
+
+    </div>
+
+    <hr>
+    <h2 style = "font-size: 4em"><em>Float</em></h2>
+    <div class = "sec">
+    <p>A float is a decimal number. A variable of data type <em>float</em> can store both a real whole and 
+        decimal number. Printing a whole number variable of type float prints its floating point value.  A float can be casted to an int using the int() 
+        function, and vice versa. Example in the code snippet shown.</p>
+        <div class = "codes" id = "code2">
+        <pre><code class = "language-python">
+float_num = 5.6
+int_num = int(float_num)
+float_val = float(5)
+print(float_num) #5.6
+print(int_num) #5
+print(float_val) #5.0
+        </code></pre>
+        </div>
+
+    </div>
+    <hr>
+
+    <h2 style = "font-size: 4em"><em>Boolean (bool)</em></h2>
+    <div class = "sec">
+    <p> A boolean is a true/false value. A variable of data type <em>bool</em> can only store the value True or False. 
+        Printing a boolean variable will either output True or False, depending on which it is assigned to.</p>
+        <div class = "codes">
+        <pre><code class = "language-python">
+is_weekend = True
+is_holiday = False
+print(is_weekend) #True
+        </code></pre>
+        </div>
+
+    </div>
+
+    <hr>
+
+    <h2 style = "font-size: 4em"><em>String (str)</em></h2>
+    <div class = "sec">
+    <p> A string is a value that contains quotes. A variable of data type <em>str</em> can store a mix of letters, 
+        numbers, and symbols in quotes. Example strings include words, names, and quoted digits.</p>
+        <div class = "codes">
+        <pre><code class = "language-python">
+name = "Rick"
+character = 'B'
+num = str(5) #'5'
+print(name, character) #Rick B
+        </code></pre>
+        </div>
+
+    </div>
+
+    <hr>
+
+    <h2 style = "font-size: 4em"><em>String Manipulation</em></h2>
+    <div class = "sec">
+    <ul>
+        <li>String Concatination: Strings can be added together to create a new string using the + operator</li>
+        <li>Indexing: Individuals characters of a string can be accessed by using string_name[*index num*]
+            where the first character has index 0, and the index increments for each subsequent char. 
+            The last char has an index of -1, and the index of each previous char counts down.
+        </li>
+        <li>Slicing: Subsets of a string can be accessed using string_name[start_index : end_index + 1: increment_amount]. 
+            We use end_index + 1 because the slicing parameter only goes from start_index to end_index exclusive. start_index is 0 by default,
+            end_index is the end of the string by defeult, and increment_amount is 1 by default.
+        </li>
+        <li>f strings: Values of variables do not have to be concatenated, but could be directly placed into an existing 
+            string using brackets ({}) with the key character 'f'.
+        </li>
+    </ul>
+        <div class = "codes">
+        <pre><code class = "language-python">
+lang = "Python"
+use = "coding"
+print(lang + " " + use) #Python coding
+print(f"Coding in {lang}") #Coding in python
+print(lang[3]) #h
+print(lang[-1]) #n
+print(lang[1:4]) #yth
+print(lang[2:5:2]) #to
+print(lang[::-1]) #nohtyP
+print(lang[4:1:-1]) #oht
+#goes from index 4 to 2
+        </code></pre>
+        </div>
+
+    </div>
+    
+     <hr>
+
+    <h2 style = "font-size: 4em;"><em>Other String Functions</em></h2>
+    <div class = "sec">
+    <ul>
+        <li><em>len(Strings)</em>: Gets the number of characters in a string</li>
+        <li><em>substring(start_index, end_index)</em>: Slices the string from start_index (inclusive) to end_index (exclusive). 
+            The end index is the length of the string by default.
+        </li>
+        <li><em>find(str)</em>: gets the index of the string or char in the parameter; returns -1 if not found.
+        </li>
+        <li><em>replace(str1, str2)</em>: Replaces the substring str1 with str2 in its old position. 
+            Returns modified string.
+        </li>
+        <li><em>upper(str), lower(str)</em>: Returns an uppercase or lowercase version of the string, respectively.
+        </li>
+        <li><em>startswith(str), endswith(str)</em>: Returns true/false based on 
+            whether string starts with or ends with the substring, respectively.
+        </li>
+    </ul>
+        <div class = "codes">
+        <pre><code class = "language-python">
+lang = "Python"
+print(len(lang)) #6
+print(lang.find('t')) #2
+print(lang.find('z')) #-1
+print(lang.startswith("Py")) #True
+print(lang.endswith("On")) #False - Case Sensitivity
+print(lang.upper()) #PYTHON
+print(lang.replace("yt", "oa")) #poathon
+        </code></pre>
+        </div>
+
+    </div>
+        <div class = "foot-buttons">
+        <button disabled><i class="fas fa-arrow-left" style = "padding-right: 5px;"></i>Prev</button>
+        <div style = "display: flex; align-items: center; gap: 10px; font-size: 2rem;"><button id = "quiz" onclick = "window.location.href = '../quizzes/vars_quiz.html'">Quiz</button>
+            <span style = "font-weight: 700"></span></div>
+        <button onclick = "window.location.href = 'io.html'">Next<i class="fas fa-arrow-right" style = "padding-left: 5px;"></i></button>
+        </div>        
+
+    <script src = "{{ url_for('static', filename = 'script.js') }}"></script>
+</body>
